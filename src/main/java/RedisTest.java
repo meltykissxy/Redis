@@ -10,12 +10,29 @@ import java.util.Set;
 public class RedisTest {
 
     @Test
+    public void run02() {
+        Jedis jedis = new Jedis("hadoop102",6379);
+        // KISS 简单的赋值，注意这里可以返回成功还是失败
+        System.out.println(jedis.set("k1", "lss"));
+        System.out.println(jedis.set("k2", "ly"));
+        System.out.println(jedis.set("k3", "yjy"));
+        // KISS 简单的获取key对应的值
+        System.out.println(jedis.get("k1"));
+        // KISS 获取所有key
+        System.out.println(jedis.keys("*").toString());
+        jedis.close();
+    }
+
+    // KISS 基础的连接Redis
+    @Test
     public void run01() {
         Jedis jedis = new Jedis("hadoop102",6379);
         String pong = jedis.ping();
         System.out.println("连接成功："+pong);
         jedis.close();
     }
+
+
 
     public static void main(String[] args) {
         Jedis jedis = getJedis();
