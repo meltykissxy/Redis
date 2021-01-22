@@ -6,7 +6,7 @@
 Redis是C语言开发的，安装跟Java完全不一样，烦死我了
 
 1. 装gcc
-sudo yum install centos-release-scl scl-utils-build 
+sudo yum install centos-release-scl scl-utils-build
 sudo yum install -y devtoolset-8-toolchain
 sudo scl enable devtoolset-8 bash
 注意scl命令后，此时账号显示变为root了，继续操作
@@ -14,10 +14,10 @@ sudo gcc --version（检查版本是否正确）
 
 2. 安装Redis
 上面scl切换到root用户了哦，继续在root用户下面操作
-  1. 解压命令：tar -zxvf redis-6.0.8.tar.gz
-  2. 解压完成后进入目录：cd redis-6.0.8
-  3. 在redis-6.0.8目录下执行make命令
-  4. 然后执行make install
+- 解压命令：tar -zxvf redis-6.0.8.tar.gz
+- 解压完成后进入目录：cd redis-6.0.8
+- 在redis-6.0.8目录下执行make命令
+- 然后执行make install
 
 安装完了哦，在/usr/local/bin能看到6个文件。以后你想删Redis时，直接把这6个文件删了就行，so easy。但是别tm进去，别给自己找麻烦
 
