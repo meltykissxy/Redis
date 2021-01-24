@@ -13,9 +13,20 @@ public class RedisTest {
         jedis.close();
     }
 
+    // KISS Bitmap
     @Test
     public void run12() {
         Jedis jedis = new Jedis("hadoop102",6379);
+        jedis.flushDB();
+        jedis.setbit("sign", 0, "1");
+        jedis.setbit("sign", 1, "0");
+        jedis.setbit("sign", 2, "1");
+        jedis.setbit("sign", 3, "1");
+        jedis.setbit("sign", 4, "0");
+        jedis.setbit("sign", 5, "1");
+        jedis.setbit("sign", 6, "1");
+        //System.out.println(jedis.getbit("打卡", 3));
+        System.out.println(jedis.bitcount("sign", 0, -1));
         jedis.close();
     }
 
