@@ -1,25 +1,84 @@
 import org.junit.jupiter.api.Test;
-import redis.clients.jedis.Jedis;
-import redis.clients.jedis.JedisPool;
-import redis.clients.jedis.JedisPoolConfig;
-import redis.clients.jedis.Tuple;
+import redis.clients.jedis.*;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 public class RedisTest {
 
     @Test
+    public void run13() {
+        Jedis jedis = new Jedis("hadoop102",6379);
+        jedis.close();
+    }
+
+    @Test
+    public void run12() {
+        Jedis jedis = new Jedis("hadoop102",6379);
+        jedis.close();
+    }
+
+    // KISS Hyperloglog
+    @Test
+    public void run11() {
+        Jedis jedis = new Jedis("hadoop102",6379);
+        jedis.pfadd("hll1", "a", "b", "c", "d", "e", "f");
+        jedis.pfadd("hll2", "e", "f", "g", "h", "i", "j");
+
+        jedis.pfmerge("hll3", "hll1", "hll2");
+
+        System.out.println(jedis.pfcount("hll3"));
+        jedis.close();
+    }
+
+    @Test
+    public void run10() {
+        Jedis jedis = new Jedis("hadoop102",6379);
+        jedis.geoadd("china:city", 116.38, 39.90, "天安门");
+        jedis.geoadd("china:city", 116.42, 39.93, "东城区");
+        jedis.geoadd("china:city", 116.37, 39.92, "西城区");
+        jedis.geoadd("china:city", 116.30, 39.95, "海淀区");
+        jedis.geoadd("china:city", 116.35, 39.87, "宣武区");
+        jedis.geoadd("china:city", 116.28, 39.85, "丰台区");
+
+        System.out.println(jedis.geopos("china:city", "西城区", "东城区")); //[(116.37000113725662,39.919999041618105), (116.41999751329422,39.93000105131286)]
+
+        System.out.println(jedis.geodist("china:city", "西城区", "东城区", GeoUnit.KM));
+
+        List<GeoRadiusResponse> georadius = jedis.georadius("china:city", 116.30, 39.95, 10, GeoUnit.KM);
+        for (GeoRadiusResponse geoRadiusResponse : georadius) {
+            System.out.println(geoRadiusResponse.getMemberByString());
+        }
+        //宣武区
+        //海淀区
+        //天安门
+        //西城区
+
+        jedis.close();
+    }
+
+    @Test
     public void run09() {
         Jedis jedis = new Jedis("hadoop102",6379);
-
+        jedis.set("k12", "abcdefg");
+        jedis.setrange("k12", 2, "ly");
+        System.out.println(jedis.get("k12"));// ablyefg
         jedis.close();
     }
 
     @Test
     public void run08() {
         Jedis jedis = new Jedis("hadoop102",6379);
+        jedis.set("i1", "13");
+        jedis.incrBy("i1", 2);
+        System.out.println(jedis.get("i1"));
 
+        jedis.set("s1", "lss");
+        jedis.append("s1", "lovely");
+        jedis.strlen("s1");
+        System.out.println(jedis.getrange("s1", 0, 3)); //右侧是闭区间，区别Java
+        System.out.println(jedis.getrange("s1", 0, -1)); //右侧全部用-1
         jedis.close();
     }
 
