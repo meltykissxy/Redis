@@ -10,6 +10,27 @@ public class RedisTest {
     @Test
     public void run13() {
         Jedis jedis = new Jedis("hadoop102",6379);
+        jedis.flushDB();
+        jedis.setbit("user:001:week01", 0, "1");
+        jedis.setbit("user:001:week01", 1, "0");
+        jedis.setbit("user:001:week01", 2, "0");
+        jedis.setbit("user:001:week01", 3, "1");
+        jedis.setbit("user:001:week01", 4, "0");
+        jedis.setbit("user:001:week01", 5, "1");
+        jedis.setbit("user:001:week01", 6, "0");
+
+        jedis.setbit("user:002:week01", 0, "0");
+        jedis.setbit("user:002:week01", 1, "0");
+        jedis.setbit("user:002:week01", 2, "1");
+        jedis.setbit("user:002:week01", 3, "1");
+        jedis.setbit("user:002:week01", 4, "1");
+        jedis.setbit("user:002:week01", 5, "1");
+        jedis.setbit("user:002:week01", 6, "1");
+
+        jedis.bitop(BitOP.AND, "BitOP.AND01", "user:001:week01", "user:002:week01");
+        jedis.bitop(BitOP.OR, "BitOP.OR01", "user:001:week01", "user:002:week01");
+        jedis.bitop(BitOP.XOR, "BitOP.XOR01", "user:001:week01", "user:002:week01");
+
         jedis.close();
     }
 
@@ -17,7 +38,6 @@ public class RedisTest {
     @Test
     public void run12() {
         Jedis jedis = new Jedis("hadoop102",6379);
-        jedis.flushDB();
         jedis.setbit("sign", 0, "1");
         jedis.setbit("sign", 1, "0");
         jedis.setbit("sign", 2, "1");
