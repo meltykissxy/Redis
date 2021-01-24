@@ -7,6 +7,35 @@ import java.util.Set;
 
 public class RedisTest {
 
+    // KISS Jedis事务操作，重点
+    @Test
+    public void run14() {
+        Jedis jedis = new Jedis("hadoop102", 6379);
+        jedis.set("money", "100");
+        jedis.set("out", "0");
+
+        jedis.watch("money");
+
+        //开启redis事务
+        Transaction multi = jedis.multi();
+        int a = 0;
+        try {
+            multi.decrBy("money", 20);
+            multi.incrBy("out", 20);
+        } catch (Exception e) {
+            //事务回滚
+            multi.discard();
+            e.printStackTrace();
+        }
+        //redis事务提交
+        multi.exec();
+
+        System.out.println(jedis.get("money"));
+        System.out.println(jedis.get("out"));
+
+        jedis.close();
+    }
+
     @Test
     public void run13() {
         Jedis jedis = new Jedis("hadoop102",6379);
