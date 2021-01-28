@@ -1,3 +1,5 @@
+package newredis;
+
 import com.meltykiss.utils.RedisUtil;
 import redis.clients.jedis.JedisCluster;
 

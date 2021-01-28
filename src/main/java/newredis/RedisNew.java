@@ -1,3 +1,5 @@
+package newredis;
+
 import com.meltykiss.utils.RedisUtil;
 import org.junit.jupiter.api.Test;
 import redis.clients.jedis.Jedis;

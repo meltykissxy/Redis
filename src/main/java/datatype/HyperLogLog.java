@@ -1,3 +1,5 @@
+package datatype;
+
 import com.meltykiss.utils.RedisUtil;
 import redis.clients.jedis.Jedis;
 

@@ -64,35 +64,6 @@ public class RedisTest {
         jedis.close();
     }
 
-    // KISS Bitmap
-    @Test
-    public void run12() {
-        Jedis jedis = new Jedis("hadoop102",6379);
-        jedis.setbit("sign", 0, "1");
-        jedis.setbit("sign", 1, "0");
-        jedis.setbit("sign", 2, "1");
-        jedis.setbit("sign", 3, "1");
-        jedis.setbit("sign", 4, "0");
-        jedis.setbit("sign", 5, "1");
-        jedis.setbit("sign", 6, "1");
-        //System.out.println(jedis.getbit("打卡", 3));
-        System.out.println(jedis.bitcount("sign", 0, -1));
-        jedis.close();
-    }
-
-    // KISS Hyperloglog
-    @Test
-    public void run11() {
-        Jedis jedis = new Jedis("hadoop102",6379);
-        jedis.pfadd("hll1", "a", "b", "c", "d", "e", "f");
-        jedis.pfadd("hll2", "e", "f", "g", "h", "i", "j");
-
-        jedis.pfmerge("hll3", "hll1", "hll2");
-
-        System.out.println(jedis.pfcount("hll3"));
-        jedis.close();
-    }
-
     @Test
     public void run10() {
         Jedis jedis = new Jedis("hadoop102",6379);
