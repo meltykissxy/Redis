@@ -231,6 +231,26 @@ public class RedisTest {
     }
 
 
+    /**
+     * 密码配置（protected-mode为no时，bind和requirepass都注释掉；protected-mode为yes时，bind和requirepass必须设一个）
+     * 69行，bind 127.0.0.1
+     * 88行，protected-mode no
+     * 789行，requirepass <密码>
+     * 如果你设置了密码
+     * Jedis
+     * Jedis jedis = new Jedis("hadoop102",6379);
+     * jedis.auth(<密码>);
+     * 命令行
+     * 需要在Redis命令行中：AUTH <密码>
+     */
+    @Test
+    public void run01_1() {
+        Jedis jedis = new Jedis("hadoop102",6379);
+        jedis.auth("PASSWORD");
+        String pong = jedis.ping();
+        System.out.println("连接成功："+pong);
+        jedis.close();
+    }
 
     public static void main(String[] args) {
         Jedis jedis = getJedis();
