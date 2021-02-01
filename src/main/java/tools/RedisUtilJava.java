@@ -1,16 +1,19 @@
-package com.meltykiss.utils;
+package tools;
+
 
 import redis.clients.jedis.*;
 
+import java.io.IOException;
 import java.util.HashSet;
+import java.util.Properties;
 import java.util.Set;
 
-public class RedisUtil {
+public class RedisUtilJava {
     /**
      * Jedis连接池
      */
     private static JedisPool jedisPool = null;
-    public static Jedis getJedis(){
+    public static Jedis getJedis() throws IOException {
         if(jedisPool == null){
             JedisPoolConfig jedisPoolConfig = new JedisPoolConfig();
             jedisPoolConfig.setMaxTotal(100);
@@ -32,7 +35,8 @@ public class RedisUtil {
              * 空闲时偶尔测一下
              */
             jedisPoolConfig.setTestWhileIdle(true);
-            jedisPool = new JedisPool(jedisPoolConfig, "hadoop102", 6379);
+            Properties properties = PropertiesUtilJava.load("config.properties");
+            jedisPool = new JedisPool(jedisPoolConfig, properties.getProperty("redis.host"), Integer.parseInt(properties.getProperty("redis.port")));
         }
         return jedisPool.getResource();
     }
@@ -102,5 +106,12 @@ public class RedisUtil {
             jedisCluster = new JedisCluster(nodes, jedisPoolConfig);
         }
         return jedisCluster;
+    }
+
+    public static void newJedis() {
+        Jedis jedis = new Jedis("hadoop102",6379);
+        String pong = jedis.ping();
+        System.out.println("连接成功："+pong);
+        jedis.close();
     }
 }

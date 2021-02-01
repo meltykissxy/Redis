@@ -1,11 +1,13 @@
 package datatype;
 
-import com.meltykiss.utils.RedisUtil;
 import redis.clients.jedis.Jedis;
+import tools.RedisUtilJava;
+
+import java.io.IOException;
 
 public class HyperLogLog {
-    public static void main(String[] args) {
-        Jedis jedis = RedisUtil.getJedis();
+    public static void main(String[] args) throws IOException {
+        Jedis jedis = RedisUtilJava.getJedis();
         jedis.del("crawled:20171124");
         jedis.del("crawled:20171125");
         jedis.del("crawled:20171126");

@@ -1,8 +1,8 @@
-import com.meltykiss.utils.RedisUtil;
 import org.junit.jupiter.api.Test;
 import redis.clients.jedis.*;
+import tools.RedisUtilJava;
 
-import java.util.List;
+import java.io.IOException;
 import java.util.Map;
 import java.util.Set;
 
@@ -149,8 +149,8 @@ public class RedisTest {
         jedis.close();
     }
 
-    public static void main(String[] args) {
-        Jedis jedis = RedisUtil.getJedis();
+    public static void main(String[] args) throws IOException {
+        Jedis jedis = RedisUtilJava.getJedis();
         jedis.set("k1000", "v1000");
 
         Set<String> keyset = jedis.keys("*");

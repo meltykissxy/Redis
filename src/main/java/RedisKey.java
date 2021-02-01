@@ -1,11 +1,13 @@
-import com.meltykiss.utils.RedisUtil;
 import org.junit.jupiter.api.Test;
 import redis.clients.jedis.Jedis;
+import tools.RedisUtilJava;
+
+import java.io.IOException;
 
 public class RedisKey {
     @Test
-    public void run01() {
-        Jedis jedis = RedisUtil.getJedis();
+    public void run01() throws IOException {
+        Jedis jedis = RedisUtilJava.getJedis();
         // KISS 简单的赋值，注意这里可以返回成功还是失败
         System.out.println(jedis.set("k1", "lss"));
         System.out.println(jedis.set("k2", "ly"));

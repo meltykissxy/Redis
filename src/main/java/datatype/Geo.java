@@ -1,18 +1,19 @@
 package datatype;
 
-import com.meltykiss.utils.RedisUtil;
 import org.junit.jupiter.api.Test;
 import redis.clients.jedis.GeoRadiusResponse;
 import redis.clients.jedis.GeoUnit;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.params.GeoRadiusParam;
+import tools.RedisUtilJava;
 
+import java.io.IOException;
 import java.util.List;
 
 public class Geo {
     @Test
-    public void run02() {
-        Jedis jedis = RedisUtil.getJedis();
+    public void run02() throws IOException {
+        Jedis jedis = RedisUtilJava.getJedis();
         jedis.del("cars");
         // The first argument is the set we’re adding to, the second is the longitude, third is the latitude and the fourth is the member name
         jedis.geoadd("cars", -115.17087, 36.12306, "my-car");
@@ -36,8 +37,8 @@ public class Geo {
     }
 
     @Test
-    public void run01() {
-        Jedis jedis = RedisUtil.getJedis();
+    public void run01() throws IOException {
+        Jedis jedis = RedisUtilJava.getJedis();
         jedis.geoadd("china:city", 116.38, 39.90, "天安门");
         jedis.geoadd("china:city", 116.42, 39.93, "东城区");
         jedis.geoadd("china:city", 116.37, 39.92, "西城区");

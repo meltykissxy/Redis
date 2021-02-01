@@ -1,12 +1,14 @@
 package datatype;
 
-import com.meltykiss.utils.RedisUtil;
 import redis.clients.jedis.BitOP;
 import redis.clients.jedis.Jedis;
+import tools.RedisUtilJava;
+
+import java.io.IOException;
 
 public class Bitmap {
-    public static void main(String[] args) {
-        Jedis jedis = RedisUtil.getJedis();
+    public static void main(String[] args) throws IOException {
+        Jedis jedis = RedisUtilJava.getJedis();
         jedis.del("sign_week_01");
         jedis.del("sign_week_02");
 

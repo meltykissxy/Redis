@@ -1,11 +1,11 @@
 package newredis;
 
-import com.meltykiss.utils.RedisUtil;
 import redis.clients.jedis.JedisCluster;
+import tools.RedisUtilJava;
 
 public class RedisCluster {
     public static void main(String[] args) {
-        JedisCluster jedisCluster = RedisUtil.getJedisCluster();
+        JedisCluster jedisCluster = RedisUtilJava.getJedisCluster();
         jedisCluster.set("k1", "v1");
         // 关闭整个连接池
         jedisCluster.close();

@@ -1,15 +1,15 @@
 package newredis;
 
-import com.meltykiss.utils.RedisUtil;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.Tuple;
+import tools.RedisUtilJava;
 
 import java.util.Map;
 import java.util.Set;
 
 public class RedisSentinel {
     public static void main(String[] args) {
-        Jedis jedis = RedisUtil.getJedisFromSentinel();
+        Jedis jedis = RedisUtilJava.getJedisFromSentinel();
         jedis.set("k1000","v1000");
         Set<String> keyset = jedis.keys("*");
         for (String key : keyset) {

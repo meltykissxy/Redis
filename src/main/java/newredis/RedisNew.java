@@ -1,8 +1,10 @@
 package newredis;
 
-import com.meltykiss.utils.RedisUtil;
 import org.junit.jupiter.api.Test;
 import redis.clients.jedis.Jedis;
+import tools.RedisUtilJava;
+
+import java.io.IOException;
 
 // 初始化连接
 public class RedisNew {
@@ -17,8 +19,8 @@ public class RedisNew {
 
     // 连接池
     @Test
-    public void run02() {
-        Jedis jedis = RedisUtil.getJedis();
+    public void run02() throws IOException {
+        Jedis jedis = RedisUtilJava.getJedis();
         String pong = jedis.ping();
         System.out.println("连接成功："+pong);
         jedis.close();
@@ -38,8 +40,8 @@ public class RedisNew {
      * 需要在Redis命令行中：AUTH <密码>
      */
     @Test
-    public void run03() {
-        Jedis jedis = RedisUtil.getJedis();
+    public void run03() throws IOException {
+        Jedis jedis = RedisUtilJava.getJedis();
         jedis.auth("PASSWORD");
         String pong = jedis.ping();
         System.out.println("连接成功："+pong);
